@@ -1,7 +1,7 @@
 {
   "name": "promocat/yii2-twofa",
-  "description": "Provides TOTP and QR codes for use with an authenticator like the one from Google or Authy",
   "type": "yii2-extension",
+  "description": "Provides TOTP and QR codes for use with an authenticator like the one from Google or Authy",
   "keywords": [
     "yii2",
     "otp",
@@ -12,6 +12,7 @@
     "authy",
     "qr"
   ],
+  "homepage": "https://github.com/promocat/yii2-twofa",
   "license": "MIT",
   "authors": [
     {
