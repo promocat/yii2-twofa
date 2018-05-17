@@ -27,6 +27,13 @@ class User extends \yii\web\User {
         return parent::afterLogin($identity, $cookieBased, $duration);
     }
 
+    protected function beforeLogin($identity, $cookieBased, $duration) {
+//        if($identity->hasTwoFaEnabled() && !$this->hasValidLoginVerificationSession()) {
+//            return false;
+//        }
+        return parent::before($identity, $cookieBased, $duration);
+    }
+
     /**
      * Determines if a login verification session has a valid format and is still valid.
      * @return boolean
