@@ -31,7 +31,7 @@ class User extends \yii\web\User {
 //        if($identity->hasTwoFaEnabled() && !$this->hasValidLoginVerificationSession()) {
 //            return false;
 //        }
-        return parent::before($identity, $cookieBased, $duration);
+        return parent::beforeLogin($identity, $cookieBased, $duration);
     }
 
     /**
