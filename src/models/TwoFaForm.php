@@ -100,6 +100,6 @@ class TwoFaForm extends Model {
             $user->enableTwoFa($this->secret);
             return !$user->hasErrors();
         }
-        return null;
+        return false;
     }
 }
