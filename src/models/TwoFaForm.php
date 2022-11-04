@@ -91,10 +91,10 @@ class TwoFaForm extends Model {
 
     /**
      * Enables Two Factor Authentication for a user.
-     * @return User|null the saved model or null if saving fails
+     * @return bool the saved model or null if saving fails
      * @throws Exception
      */
-    public function save() {
+    public function save(): bool {
         if ($this->validate()) {
             $user = $this->getUser();
             $user->enableTwoFa($this->secret);
