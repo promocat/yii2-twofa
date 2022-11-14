@@ -5,18 +5,21 @@ use yii\db\Migration;
 /**
  * Class m180504_122519_totp
  */
-class m180504_122519_totp extends Migration {
+class m180504_122519_totp extends Migration
+{
     /**
      * {@inheritdoc}
      */
-    public function safeUp() {
+    public function safeUp()
+    {
         $this->addColumn('{{%user}}', 'totp_secret', $this->string());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function safeDown() {
+    public function safeDown()
+    {
         $this->dropColumn('{{%user}}', 'totp_secret');
     }
 }

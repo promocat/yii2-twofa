@@ -4,12 +4,13 @@ namespace promocat\twofa\models;
 
 use Yii;
 use yii\base\Model;
+use yii\web\IdentityInterface;
 
 /**
  * Enable Two-Factor Authentication form
  */
-class TwoFaForm extends Model {
-
+class TwoFaForm extends Model
+{
     /**
      * @var string Scenario defaults to "default". Otherwise, override the constructor or init.
      * @see https://github.com/yiisoft/yii2/issues/12707
@@ -17,32 +18,25 @@ class TwoFaForm extends Model {
     const SCENARIO_ACTIVATE = self::SCENARIO_DEFAULT;
     const SCENARIO_LOGIN = 'login';
 
-    /**
-     * @var string The generated secret
-     */
-    public $secret;
-    /**
-     * @var string The code entered by the user
-     */
-    public $code;
+    /** The generated secret */
+    public string $secret;
 
-    /**
-     * @var string Keeps the user logged in.
-     */
-    public $rememberMe = true;
+    /** The code entered by the user */
+    public string $code;
 
-    /**
-     * Time window in which the key is valid. Leave this null to use the default component setting.
-     * @var int
-     */
-    public $window;
+    /** Keeps the user logged in. */
+    public bool $rememberMe = true;
 
-    private $_user;
+    /** Time window in which the key is valid. Leave this null to use the default component setting. */
+    public ?int $window = null;
+
+    private IdentityInterface $_user;
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['secret', 'code'], 'required'],
             ['code', 'filter', 'filter' => 'trim'],
@@ -53,7 +47,8 @@ class TwoFaForm extends Model {
         ];
     }
 
-    public function validateCode($attribute, $params) {
+    public function validateCode($attribute, $params)
+    {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validateTwoFaCode($this->code, $this->secret, $this->window)) {
@@ -62,17 +57,13 @@ class TwoFaForm extends Model {
         }
     }
 
-    /**
-     * @return User
-     */
-    public function getUser() {
+    public function getUser(): IdentityInterface
+    {
         return $this->_user;
     }
 
-    /**
-     * @param User $user
-     */
-    public function setUser($user) {
+    public function setUser(IdentityInterface $user)
+    {
         $this->_user = $user;
         $this->secret = $user->hasTwoFaEnabled() ? $user->getTwoFaSecret() : $user->generateTwoFaSecret();
     }
@@ -82,24 +73,30 @@ class TwoFaForm extends Model {
      *
      * @return bool whether the user is logged in successfully
      */
-    public function login() {
+    public function login()
+    {
         if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
+
         return false;
     }
 
     /**
      * Enables Two Factor Authentication for a user.
-     * @return bool the saved model or null if saving fails
-     * @throws Exception
+     *
+     * @return bool
+     * @throws \Exception
      */
-    public function save(): bool {
+    public function save(): bool
+    {
         if ($this->validate()) {
             $user = $this->getUser();
             $user->enableTwoFa($this->secret);
+
             return !$user->hasErrors();
         }
+
         return false;
     }
 }
