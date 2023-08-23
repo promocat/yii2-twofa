@@ -13,11 +13,6 @@ use yii\widgets\ActiveForm;
     <div class="col-lg-6">
         <?php
         $form = ActiveForm::begin(['id' => 'enable-2fa-form']);
-        echo $form->field($model, 'current_password')
-                  ->label(Yii::t('default', 'Current password'))
-                  ->passwordInput([
-                      'placeholder' => Yii::t('default', 'Current password'),
-                  ]);
         echo Yii::t('twofa', 'Scan the following QR code using a TOTP compatible app, like Google Authenticator or Authy.');
         ?>
         <br/>

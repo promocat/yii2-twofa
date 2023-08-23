@@ -36,9 +36,7 @@ class SiteController
         }
         $model->password = '';
 
-        return $this->render('login', [
-            'model' => $model,
-        ]);
+        return $this->render('login', ['model' => $model]);
     }
 
     public function actionLoginVerification()
@@ -62,9 +60,7 @@ class SiteController
             return $this->goBack();
         }
 
-        return $this->render('login-verification', [
-            'model' => $model,
-        ]);
+        return $this->render('login-verification', ['model' => $model]);
     }
 
 }

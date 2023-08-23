@@ -37,9 +37,7 @@ class UsersController
             return $this->redirect(['view', 'id' => $user->id]);
         }
 
-        return $this->render('enable-two-fa', [
-            'model' => $model,
-        ]);
+        return $this->render('enable-two-fa', ['model' => $model]);
     }
 
     /**
