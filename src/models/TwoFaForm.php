@@ -22,7 +22,7 @@ class TwoFaForm extends Model
     public string $secret;
 
     /** The code entered by the user */
-    public string $code;
+    public string $code = '';
 
     /** Keeps the user logged in. */
     public bool $rememberMe = true;
